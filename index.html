@@ -1,46 +1,180 @@
-<!doctype html>
-<html class="landing" lang="en" manifest="cache.appcache">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>afterglow</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <!-- Every run starts from here. The referrer guard in jb.js arms the chain
-         only when it was reached from this page, so that a browser restoring
-         its last session cannot re-run it unattended. -->
-    <div id="brand"><b>afterglow</b></div>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PS4 GoldHEN Host</title>
+    <style>
+        /* CSS Ultra-leve para WebKit do PS4 */
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 0;
+            padding: 20px;
+            font-size: 18px;
+            line-height: 1.5;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #00e676;
+            font-size: 32px;
+            text-align: center;
+            margin-bottom: 5px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #aaaaaa;
+            margin-bottom: 30px;
+            font-size: 20px;
+        }
+        .btn-main {
+            display: block;
+            width: 100%;
+            background-color: #0056b3;
+            color: #ffffff;
+            text-align: center;
+            padding: 25px;
+            font-size: 24px;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 8px;
+            border: 3px solid #0056b3;
+            margin-bottom: 30px;
+        }
+        /* Foco visível para navegação com D-Pad do controle */
+        .btn-main:focus, .btn-main:active {
+            background-color: #00e676;
+            color: #000000;
+            border-color: #00e676;
+            outline: none;
+        }
+        .box {
+            background-color: #1e1e1e;
+            border-left: 5px solid #00e676;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+        .box-warning {
+            border-left-color: #ff5252;
+        }
+        .box-title {
+            color: #00e676;
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .box-warning .box-title {
+            color: #ff5252;
+        }
+        .step {
+            margin-bottom: 12px;
+            padding-left: 10px;
+        }
+        .footer {
+            text-align: center;
+            color: #666666;
+            font-size: 14px;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 id="title">PS4 Jailbreak 14.00</h1>
+        <p class="subtitle" id="subtitle">Host GoldHEN (Afterglow)</p>
+        
+        <!-- Botão Principal com foco automático -->
+        <a href="jb.html?payload=goldhen.bin" class="btn-main" id="btn-start" tabindex="0">
+            INICIAR DESBLOQUEIO (GoldHEN)
+        </a>
+        
+        <div class="box">
+            <div class="box-title" id="info-title">📡 O QUE VAI ACONTECER:</div>
+            <div class="step" id="step1">1. O navegador irá travar ou piscar. <strong>Isso é normal.</strong></div>
+            <div class="step" id="step2">2. A tela pode ficar preta por alguns segundos (fase Kernel).</div>
+            <div class="step" id="step3">3. Se aparecerem notificações no canto superior direito, <strong>concluído</strong>.</div>
+        </div>
 
-    <div class="shell">
-      <img class="meme" src="meme.png" alt="" />
+        <div class="box box-warning">
+            <div class="box-title" id="warn-title">⚠️ SE DER ERRADO:</div>
+            <div class="step" id="err1">• <strong>Tela Vermelha / Erro:</strong> Feche o navegador e tente de novo.</div>
+            <div class="step" id="err2">• <strong>Congelou:</strong> Segure o botão físico Power por 7 segundos (2 bipes).</div>
+            <div class="step" id="err3">• <strong>Falhou:</strong> É normal falhar na 1ª tentativa. Tente novamente.</div>
+        </div>
 
-      <main class="panel">
-        <p class="lede">PS4 firmware 12.00 &ndash; 14.00 <span class="soon">&middot; 14.02 soon</span></p>
-
-        <form class="pick" id="pick">
-          <label class="opt">
-            <input type="radio" name="payload" value="hen" />
-            <span>ps4-hen</span>
-          </label>
-          <label class="opt">
-            <input type="radio" name="payload" value="goldhen" checked />
-            <span>GoldHEN</span>
-          </label>
-
-          <label class="opt opt-auto">
-            <input type="checkbox" id="auto" checked />
-            <span>autostart</span>
-          </label>
-
-          <button class="btn" type="submit">start</button>
-          <p class="count" id="count"></p>
-          <p class="count" id="cache" aria-live="polite"></p>
-        </form>
-      </main>
+        <div class="footer" id="footer">
+            Use o D-Pad do controle para navegar. Pressione X para iniciar.<br>
+            Mantenha o DNS como 0.0.0.0 para segurança.
+        </div>
     </div>
 
-    <p class="byline">by well0nez/m0zz</p>
-    <script src="launch.js"></script>
-  </body>
+    <script>
+        // Detector de idioma ultra-leve
+        const lang = (navigator.language || 'pt').substring(0, 2).toLowerCase();
+        const t = {
+            pt: {
+                sub: "Host GoldHEN (Afterglow)",
+                btn: "INICIAR DESBLOQUEIO (GoldHEN)",
+                info: "📡 O QUE VAI ACONTECER:",
+                s1: "1. O navegador irá travar ou piscar. <strong>Isso é normal.</strong>",
+                s2: "2. A tela pode ficar preta por alguns segundos (fase Kernel).",
+                s3: "3. Se aparecerem notificações no canto superior direito, <strong>concluído</strong>.",
+                warn: "⚠️ SE DER ERRADO:",
+                e1: "• <strong>Tela Vermelha / Erro:</strong> Feche o navegador e tente de novo.",
+                e2: "• <strong>Congelou:</strong> Segure o botão físico Power por 7 segundos (2 bipes).",
+                e3: "• <strong>Falhou:</strong> É normal falhar na 1ª tentativa. Tente novamente.",
+                foot: "Use o D-Pad do controle para navegar. Pressione X para iniciar.<br>Mantenha o DNS como 0.0.0.0 para segurança."
+            },
+            en: {
+                sub: "GoldHEN Host (Afterglow)",
+                btn: "START JAILBREAK (GoldHEN)",
+                info: "📡 WHAT WILL HAPPEN:",
+                s1: "1. The browser may freeze or flash. <strong>This is normal.</strong>",
+                s2: "2. The screen may go black for a few seconds (Kernel stage).",
+                s3: "3. If notifications appear in the top right, <strong>success</strong>.",
+                warn: "⚠️ IF IT FAILS:",
+                e1: "• <strong>Red Screen / Error:</strong> Close browser and try again.",
+                e2: "• <strong>Frozen:</strong> Hold physical Power button for 7 seconds (2 beeps).",
+                e3: "• <strong>Failed:</strong> Normal to fail on 1st try. Try again.",
+                foot: "Use controller D-Pad to navigate. Press X to start.<br>Keep DNS as 0.0.0.0 for safety."
+            },
+            es: {
+                sub: "Host GoldHEN (Afterglow)",
+                btn: "INICIAR DESBLOQUEO (GoldHEN)",
+                info: "📡 QUÉ SUCEDERÁ:",
+                s1: "1. El navegador puede congelarse o parpadear. <strong>Es normal.</strong>",
+                s2: "2. La pantalla puede ponerse negra unos segundos (fase Kernel).",
+                s3: "3. Si aparecen notificaciones arriba a la derecha, <strong>éxito</strong>.",
+                warn: "⚠️ SI FALLA:",
+                e1: "• <strong>Pantalla Roja / Error:</strong> Cierra el navegador e inténtalo de nuevo.",
+                e2: "• <strong>Congelado:</strong> Mantén Power 7 segundos (2 pitidos).",
+                e3: "• <strong>Falló:</strong> Es normal fallar al 1er intento. Inténtalo de nuevo.",
+                foot: "Usa el D-Pad para navegar. Presiona X para iniciar.<br>Mantén DNS en 0.0.0.0 por seguridad."
+            }
+        };
+
+        const d = t[lang] || t.pt;
+        document.getElementById('subtitle').innerText = d.sub;
+        document.getElementById('btn-start').innerText = d.btn;
+        document.getElementById('info-title').innerText = d.info;
+        document.getElementById('step1').innerHTML = d.s1;
+        document.getElementById('step2').innerText = d.s2;
+        document.getElementById('step3').innerHTML = d.s3;
+        document.getElementById('warn-title').innerText = d.warn;
+        document.getElementById('err1').innerHTML = d.e1;
+        document.getElementById('err2').innerText = d.e2;
+        document.getElementById('err3').innerText = d.e3;
+        document.getElementById('footer').innerHTML = d.foot;
+
+        // Foco automático no botão para o D-Pad
+        window.onload = function() {
+            document.getElementById('btn-start').focus();
+        };
+    </script>
+</body>
 </html>
